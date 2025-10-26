@@ -1,0 +1,50 @@
+<div class="card p-3 mb-3">
+  <h5>Add Parking Spot</h5>
+
+  <!-- If no floors yet -->
+  <ng-container *ngIf="hasFloors$ | async; else noFloors">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row g-3 align-items-end">
+      
+      <!-- Floor dropdown -->
+      <div class="col-md-4">
+        <label class="form-label">Select Floor</label>
+        <select class="form-select" formControlName="floorId">
+          <option value="">-- Choose Floor --</option>
+          <option *ngFor="let floorId of floors$ | async" [value]="floorId">
+            {{ floorId }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">Spot ID</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="spotId"
+          placeholder="e.g. F1S5"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <label class="form-label">Vehicle Type</label>
+        <select class="form-select" formControlName="allowedType">
+          <option *ngFor="let type of vehicleTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-2 d-grid">
+        <button class="btn btn-success" type="submit" [disabled]="form.invalid">
+          Add Spot
+        </button>
+      </div>
+    </form>
+  </ng-container>
+
+  <!-- No floors message -->
+  <ng-template #noFloors>
+    <div class="alert alert-warning mb-0">
+      ⚠️ No floors available. Please add a floor before adding spots.
+    </div>
+  </ng-template>
+</div>

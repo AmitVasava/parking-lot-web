@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Confirm Unpark</h2>
+
+<mat-dialog-content>
+  <p>
+    Are you sure you want to unpark
+    <strong>{{ data.vehicleNumber }}</strong>
+    from this spot?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="warn" (click)="onConfirm()">Unpark</button>
+</mat-dialog-actions>

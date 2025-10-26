@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <h2 class="mb-4">🚗 Park / Unpark Vehicles</h2>
+
+  <app-floor-spot-grid [floors$]="floors$" [readOnly]="false" [showTickets]="true"
+    (park)="onPark($event.floorId, $event.spotId, $event.allowedType)"
+    (unpark)="onUnpark($event.floorId, $event.spotId, $event.vehicleNumber)">
+  </app-floor-spot-grid>
+
+  <h3 class="mb-3">🎫 Active Tickets</h3>
+  <div *ngIf="(activeTickets$ | async)?.length; else noActive">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Ticket ID</th>
+            <th>Vehicle</th>
+            <th>Type</th>
+            <th>Floor</th>
+            <th>Spot</th>
+            <th>Parked At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of activeTickets$ | async">
+            <td>{{ t.ticketId }}</td>
+            <td>{{ t.vehicleNumber }}</td>
+            <td>{{ t.allowedType }}</td>
+            <td>{{ t.floorId }}</td>
+            <td>{{ t.spotId }}</td>
+            <td>{{ t.parkedAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noActive>
+    <div class="alert alert-info">No active tickets found.</div>
+  </ng-template>
+
+  <hr class="my-5" />
+
+  <h3 class="mb-3">🧾 Closed Tickets</h3>
+  <div class="mb-5" *ngIf="(closedTickets$ | async)?.length; else noClosed">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Ticket ID</th>
+            <th>Vehicle</th>
+            <th>Type</th>
+            <th>Floor</th>
+            <th>Spot</th>
+            <th>Parked At</th>
+            <th>Unparked At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of closedTickets$ | async">
+            <td>{{ t.ticketId }}</td>
+            <td>{{ t.vehicleNumber }}</td>
+            <td>{{ t.allowedType }}</td>
+            <td>{{ t.floorId }}</td>
+            <td>{{ t.spotId }}</td>
+            <td>{{ t.parkedAt }}</td>
+            <td>{{ t.unparkedAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ng-template #noClosed>
+    <div class="alert alert-secondary mb-5">No closed tickets yet.</div>
+  </ng-template>
+</div>

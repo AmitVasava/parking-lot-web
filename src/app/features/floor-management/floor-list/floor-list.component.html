@@ -1,0 +1,12 @@
+<div class="p-4">
+  <h2 class="mb-3">🏢 Parking Floors</h2>
+
+  <!-- Add Floor and Spot Forms -->
+  <app-add-floor></app-add-floor>
+  <app-add-spot></app-add-spot>
+
+  <hr class="my-4" />
+
+  <!-- Read-only + showTickets enabled -->
+  <app-floor-spot-grid [floors$]="floors$" [readOnly]="true" [showTickets]="true"></app-floor-spot-grid>
+</div>

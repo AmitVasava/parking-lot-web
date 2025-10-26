@@ -1,0 +1,65 @@
+<div *ngFor="let floor of floors$ | async" class="mb-4">
+  <h4 class="text-primary mb-3">{{ floor.floorId }}</h4>
+
+  <div class="row g-3">
+    <div *ngFor="let spot of floor.spots" class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card shadow-sm border-0 h-100"
+           [ngClass]="{
+             'bg-light border-success': !spot.occupied,
+             'bg-light-subtle border-danger': spot.occupied
+           }">
+        <div class="card-body">
+          <h5 class="card-title">
+            <strong>{{ spot.spotId }}</strong>
+            <span class="badge ms-2" [ngClass]="spot.occupied ? 'bg-danger' : 'bg-success'">
+              {{ spot.occupied ? 'Occupied' : 'Free' }}
+            </span>
+          </h5>
+          <p class="card-text mb-1">
+            <small>Type: {{ spot.allowedType }}</small>
+          </p>
+
+          <!-- Show details if ticket info available -->
+          <div *ngIf="spot.occupied && showTickets">
+            <button class="btn btn-link p-0 text-decoration-none" (click)="toggleDetails(spot.spotId)">
+              {{ expandedSpot === spot.spotId ? 'Hide Details ▲' : 'View Details ▼' }}
+            </button>
+
+            <div class="mt-2 small" *ngIf="expandedSpot === spot.spotId">
+              <hr />
+              <div>
+                Vehicle:
+                {{ (state.getTicketBySpot(floor.floorId, spot.spotId)?.vehicleNumber) || '-' }}
+              </div>
+              <div>
+                Ticket:
+                {{ (state.getTicketBySpot(floor.floorId, spot.spotId)?.ticketId) || '-' }}
+              </div>
+              <div>
+                Parked At:
+                {{ (state.getTicketBySpot(floor.floorId, spot.spotId)?.parkedAt) || '-' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Park button -->
+          <div *ngIf="!readOnly && !spot.occupied" class="mt-3">
+            <button class="btn btn-sm btn-outline-primary w-100"
+                    (click)="handlePark(floor.floorId, spot.spotId, spot.allowedType)">
+              Park Vehicle
+            </button>
+          </div>
+
+          <!-- Unpark button -->
+          <div *ngIf="!readOnly && spot.occupied" class="mt-3">
+            <button class="btn btn-sm btn-outline-danger w-100"
+                    (click)="handleUnpark(floor.floorId, spot.spotId, 
+                      state.getTicketBySpot(floor.floorId, spot.spotId)?.vehicleNumber)">
+              Unpark
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

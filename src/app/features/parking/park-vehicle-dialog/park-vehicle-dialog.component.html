@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <h5 class="modal-title">🚗 Park Vehicle</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+</div>
+
+<div class="modal-body">
+  <p><strong>Floor:</strong> {{ data.floorId }}</p>
+  <p><strong>Spot:</strong> {{ data.spotId }}</p>
+  <p><strong>Allowed Type:</strong> {{ data.allowedType }}</p>
+
+  <div class="mt-3">
+    <label for="vehicleNumber" class="form-label">Vehicle Number</label>
+    <input
+      id="vehicleNumber"
+      type="text"
+      class="form-control"
+      [(ngModel)]="vehicleNumber"
+      placeholder="Enter vehicle number"
+    />
+  </div>
+
+  <div class="mt-3">
+    <label class="form-label">Ticket No.</label>
+    <input
+      type="text"
+      class="form-control"
+      [value]="ticketId"
+      readonly
+    />
+  </div>
+
+  <div class="mt-3">
+    <label class="form-label">Parked At</label>
+    <input
+      type="datetime-local"
+      class="form-control"
+      [(ngModel)]="parkedAt"
+    />
+  </div>
+</div>
+
+<div class="modal-footer mt-3">
+  <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+  <button
+    type="button"
+    class="btn btn-primary ms-2"
+    [disabled]="!vehicleNumber"
+    (click)="onSubmit()"
+  >
+    Park
+  </button>
+</div>

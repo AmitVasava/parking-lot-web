@@ -1,0 +1,11 @@
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card-footer {
+  padding-bottom: 1rem;
+}
