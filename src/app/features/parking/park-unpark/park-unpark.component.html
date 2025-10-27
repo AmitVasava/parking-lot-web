@@ -6,6 +6,7 @@
     (unpark)="onUnpark($event.floorId, $event.spotId, $event.vehicleNumber)">
   </app-floor-spot-grid>
 
+  <!-- Active Tickets -->
   <h3 class="mb-3">🎫 Active Tickets</h3>
   <div *ngIf="(activeTickets$ | async)?.length; else noActive">
     <div class="table-responsive">
@@ -27,7 +28,7 @@
             <td>{{ t.allowedType }}</td>
             <td>{{ t.floorId }}</td>
             <td>{{ t.spotId }}</td>
-            <td>{{ t.parkedAt }}</td>
+            <td>{{ t.parkedAt | date:'short' }}</td>
           </tr>
         </tbody>
       </table>
@@ -40,8 +41,9 @@
 
   <hr class="my-5" />
 
+  <!-- Closed Tickets -->
   <h3 class="mb-3">🧾 Closed Tickets</h3>
-  <div class="mb-5" *ngIf="(closedTickets$ | async)?.length; else noClosed">
+  <div *ngIf="(closedTickets$ | async)?.length; else noClosed" class="mb-5">
     <div class="table-responsive">
       <table class="table table-striped table-bordered align-middle">
         <thead class="table-light">
@@ -53,6 +55,8 @@
             <th>Spot</th>
             <th>Parked At</th>
             <th>Unparked At</th>
+            <th>Fee</th>
+            <th>Invoice</th>
           </tr>
         </thead>
         <tbody>
@@ -62,8 +66,15 @@
             <td>{{ t.allowedType }}</td>
             <td>{{ t.floorId }}</td>
             <td>{{ t.spotId }}</td>
-            <td>{{ t.parkedAt }}</td>
-            <td>{{ t.unparkedAt }}</td>
+            <td>{{ t.parkedAt | date:'short' }}</td>
+            <td>{{ t.unparkedAt | date:'short' }}</td>
+            <td>₹{{ t.fee ? t.fee : '-' }}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary" [disabled]="!getInvoiceByTicket(t.ticketId)"
+                (click)="openInvoiceDialog(getInvoiceByTicket(t.ticketId)!)">
+                View
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

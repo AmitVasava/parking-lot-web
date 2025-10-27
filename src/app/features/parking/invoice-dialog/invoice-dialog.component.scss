@@ -1,0 +1,59 @@
+/* --- Dotted divider styling (premium soft blue theme) --- */
+.border-light-subtle {
+    border-color: rgba(0, 102, 204, 0.25) !important;
+    /* faint blue-gray tint */
+    border-style: dotted !important;
+    border-width: 1px !important;
+    opacity: 0.9;
+}
+
+/* --- Keep section separators solid and subtle --- */
+hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 0.7;
+    margin: 0.4rem 0;
+}
+
+/* --- Card and modal clean up --- */
+.invoice-card {
+    background-color: #fff;
+    border-radius: 8px;
+    max-width: 420px;
+    margin: 0 auto;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.invoice-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Section titles --- */
+.section h6 {
+    font-size: 0.9rem;
+    color: #495057;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
+}
+
+/* --- Small text optimization --- */
+small.text-muted {
+    font-size: 0.78rem;
+}
+
+strong {
+    font-size: 0.84rem;
+    color: #212529;
+}
+
+/* --- Footer cleanup --- */
+.modal-footer {
+    background-color: #fafbfc;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 0 0 8px 8px;
+}
+
+.btn-outline-secondary {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.75rem;
+}

@@ -1,0 +1,116 @@
+<div class="modal-header mb-2">
+  <h5 class="modal-title fw-semibold text-dark mb-0">
+    🧾 Parking Invoice
+  </h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body bg-light">
+  <div class="invoice-card shadow-sm mx-auto p-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <div>
+        <h6 class="fw-bold text-primary mb-0">Parking Lot App</h6>
+        <small class="text-muted">Official Parking Receipt</small>
+      </div>
+      <div class="text-end">
+        <small class="text-muted d-block">Generated At</small>
+        <strong style="font-size: 0.80rem;">{{ data.invoice.generatedAt | date:'medium' }}</strong>
+      </div>
+    </div>
+
+    <hr class="my-2" />
+
+    <!-- Ticket Info -->
+    <div class="section mb-2">
+      <h6 class="text-secondary fw-semibold mb-2">
+        <i class="bi bi-ticket-perforated me-1"></i> Ticket Information
+      </h6>
+
+      <div class="row small g-0">
+        <div class="col-6 mb-1 border-end border-light-subtle pe-2">
+          <small class="text-muted">Invoice ID</small><br />
+          <strong>{{ data.invoice.id }}</strong>
+        </div>
+        <div class="col-6 mb-1 ps-2">
+          <small class="text-muted">Ticket ID</small><br />
+          <strong>{{ data.invoice.ticket.ticketId }}</strong>
+        </div>
+      </div>
+
+      <div class="row small g-0 border-top border-light-subtle pt-1 mt-1">
+        <div class="col-6 mb-1 border-end border-light-subtle pe-2">
+          <small class="text-muted">Vehicle No</small><br />
+          <strong>{{ data.invoice.ticket.vehicleNumber }}</strong>
+        </div>
+        <div class="col-6 mb-1 ps-2">
+          <small class="text-muted">Type</small><br />
+          <strong>{{ data.invoice.ticket.allowedType }}</strong>
+        </div>
+      </div>
+
+      <div class="row small g-0 border-top border-light-subtle pt-1 mt-1">
+        <div class="col-6 mb-1 border-end border-light-subtle pe-2">
+          <small class="text-muted">Floor</small><br />
+          <strong>{{ data.invoice.ticket.floorId }}</strong>
+        </div>
+        <div class="col-6 mb-1 ps-2">
+          <small class="text-muted">Spot</small><br />
+          <strong>{{ data.invoice.ticket.spotId }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-2" />
+
+    <!-- Duration & Time -->
+    <div class="section mb-2">
+      <h6 class="text-secondary fw-semibold mb-2">
+        <i class="bi bi-clock-history me-1"></i> Duration & Time
+      </h6>
+
+      <div class="row small g-0">
+        <div class="col-6 mb-1 border-end border-light-subtle pe-2">
+          <small class="text-muted">Parked At</small><br />
+          <strong>{{ data.invoice.ticket.parkedAt | date:'medium' }}</strong>
+        </div>
+        <div class="col-6 mb-1 ps-2">
+          <small class="text-muted">Unparked At</small><br />
+          <strong>{{ data.invoice.ticket.unparkedAt | date:'medium' }}</strong>
+        </div>
+      </div>
+
+      <div class="row small g-0 border-top border-light-subtle pt-1 mt-1">
+        <div class="col-12">
+          <small class="text-muted">Duration</small><br />
+          <strong>{{ data.invoice.duration }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-2" />
+
+    <!-- Payment Summary -->
+    <div class="text-center pt-1">
+      <div class="fs-6 fw-bold text-dark mb-1">
+        💰 Total Fee: <span class="text-success">₹{{ data.invoice.totalAmount }}</span>
+      </div>
+
+      <span class="badge rounded-pill fs-6 px-3 py-1" [ngClass]="{
+          'bg-success': data.invoice.status === 'PAID',
+          'bg-warning text-dark': data.invoice.status === 'UNPAID'
+        }">
+        <i [class.bi-check-circle-fill]="data.invoice.status === 'PAID'"
+          [class.bi-exclamation-circle-fill]="data.invoice.status === 'UNPAID'" class="me-1"></i>
+        {{ data.invoice.status }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer border-0 bg-white justify-content-between py-2 mt-1">
+  <small class="text-muted">Thank you for parking with us!</small>
+  <button class="btn btn-outline-secondary px-3 py-1" (click)="close()">
+    Close
+  </button>
+</div>

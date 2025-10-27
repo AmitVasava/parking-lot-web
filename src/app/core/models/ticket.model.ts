@@ -1,3 +1,5 @@
+import { Invoice } from './invoice.model';
+
 export interface ParkingTicket {
   ticketId: string;
   floorId: string;
@@ -5,5 +7,6 @@ export interface ParkingTicket {
   vehicleNumber: string;
   allowedType: string;
   parkedAt: string;
-  unparkedAt?: string; // optional for active tickets
+  unparkedAt?: string;
+  fee?: number;
 }

@@ -1,0 +1,49 @@
+.card {
+    transition: all 0.15s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.badge i {
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.bi.fs-5 {
+    font-size: 1.1rem !important;
+    opacity: 0.9;
+}
+
+.card-body {
+    padding: 0.9rem 1rem;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+}
+
+.vehicle-icon {
+    font-size: 1.25rem;
+    /* uniform size */
+    width: 22px;
+    /* equal box width */
+    height: 22px;
+    /* equal box height */
+    line-height: 22px;
+    /* center vertically */
+    text-align: center;
+    /* center horizontally */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+/* optional: subtle tweak for thin icons like bike */
+.bi-bicycle {
+    transform: scale(1.2);
+    /* makes it visually equal to car/truck */
+}

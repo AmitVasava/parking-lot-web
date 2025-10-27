@@ -9,15 +9,15 @@ import { ParkingStateService } from 'src/app/core/services/parking-state.service
 })
 export class FloorSpotGridComponent {
   @Input() floors$!: Observable<ParkingFloor[]>;
-  @Input() readOnly: boolean = false;
-  @Input() showTickets: boolean = false;
+  @Input() readOnly = false;
+  @Input() showTickets = false;
 
-  @Output() park = new EventEmitter<{ floorId: string, spotId: string, allowedType: string }>();
-  @Output() unpark = new EventEmitter<{ floorId: string, spotId: string, vehicleNumber?: string }>();
+  @Output() park = new EventEmitter<{ floorId: string; spotId: string; allowedType: string }>();
+  @Output() unpark = new EventEmitter<{ floorId: string; spotId: string; vehicleNumber?: string }>();
 
   expandedSpot: string | null = null;
 
-  constructor(public state: ParkingStateService) {}
+  constructor(public state: ParkingStateService) { }
 
   toggleDetails(spotId: string) {
     this.expandedSpot = this.expandedSpot === spotId ? null : spotId;

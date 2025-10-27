@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h5 class="modal-title">Unpark Vehicle</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+</div>
+
+<div class="modal-body">
+  <p><strong>Ticket:</strong> {{ data.ticket.ticketId }}</p>
+  <p><strong>Vehicle:</strong> {{ data.ticket.vehicleNumber }}</p>
+  <p><strong>Type:</strong> {{ data.ticket.allowedType }}</p>
+  <p><strong>Floor:</strong> {{ data.ticket.floorId }}</p>
+  <p><strong>Spot:</strong> {{ data.ticket.spotId }}</p>
+  <hr />
+  <p><strong>Duration:</strong> {{ duration }}</p>
+  <p><strong>Amount to Pay:</strong> ₹{{ amount }}</p>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+  <button class="btn btn-success ms-2" (click)="confirmPayment()">Confirm Payment</button>
+</div>
