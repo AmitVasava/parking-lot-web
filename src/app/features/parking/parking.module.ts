@@ -9,6 +9,7 @@ import { ParkVehicleDialogComponent } from './park-vehicle-dialog/park-vehicle-d
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UnparkSummaryDialogComponent } from './unpark-summary-dialog/unpark-summary-dialog.component';
 import { InvoiceDialogComponent } from './invoice-dialog/invoice-dialog.component';
+import { TicketsModule } from './tickets/tickets.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { InvoiceDialogComponent } from './invoice-dialog/invoice-dialog.componen
     MatDialogModule,
     ParkingRoutingModule,
     MatFormFieldModule,
-    SharedModule
+    SharedModule,
+    TicketsModule
   ]
 })
 export class ParkingModule { }

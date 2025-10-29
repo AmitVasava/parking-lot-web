@@ -1,5 +1,3 @@
-import { Invoice } from './invoice.model';
-
 export interface ParkingTicket {
   ticketId: string;
   floorId: string;

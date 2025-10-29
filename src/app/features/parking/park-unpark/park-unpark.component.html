@@ -6,82 +6,12 @@
     (unpark)="onUnpark($event.floorId, $event.spotId, $event.vehicleNumber)">
   </app-floor-spot-grid>
 
-  <!-- Active Tickets -->
-  <h3 class="mb-3">🎫 Active Tickets</h3>
-  <div *ngIf="(activeTickets$ | async)?.length; else noActive">
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Ticket ID</th>
-            <th>Vehicle</th>
-            <th>Type</th>
-            <th>Floor</th>
-            <th>Spot</th>
-            <th>Parked At</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let t of activeTickets$ | async">
-            <td>{{ t.ticketId }}</td>
-            <td>{{ t.vehicleNumber }}</td>
-            <td>{{ t.allowedType }}</td>
-            <td>{{ t.floorId }}</td>
-            <td>{{ t.spotId }}</td>
-            <td>{{ t.parkedAt | date:'short' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <ng-template #noActive>
-    <div class="alert alert-info">No active tickets found.</div>
-  </ng-template>
+  <!-- park-unpark.component.html (bottom section) -->
+  <app-active-tickets [tickets]="activeTickets$ | async"></app-active-tickets>
 
   <hr class="my-5" />
 
-  <!-- Closed Tickets -->
-  <h3 class="mb-3">🧾 Closed Tickets</h3>
-  <div *ngIf="(closedTickets$ | async)?.length; else noClosed" class="mb-5">
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Ticket ID</th>
-            <th>Vehicle</th>
-            <th>Type</th>
-            <th>Floor</th>
-            <th>Spot</th>
-            <th>Parked At</th>
-            <th>Unparked At</th>
-            <th>Fee</th>
-            <th>Invoice</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let t of closedTickets$ | async">
-            <td>{{ t.ticketId }}</td>
-            <td>{{ t.vehicleNumber }}</td>
-            <td>{{ t.allowedType }}</td>
-            <td>{{ t.floorId }}</td>
-            <td>{{ t.spotId }}</td>
-            <td>{{ t.parkedAt | date:'short' }}</td>
-            <td>{{ t.unparkedAt | date:'short' }}</td>
-            <td>₹{{ t.fee ? t.fee : '-' }}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary" [disabled]="!getInvoiceByTicket(t.ticketId)"
-                (click)="openInvoiceDialog(getInvoiceByTicket(t.ticketId)!)">
-                View
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <ng-template #noClosed>
-    <div class="alert alert-secondary mb-5">No closed tickets yet.</div>
-  </ng-template>
+  <app-closed-tickets [tickets]="closedTickets$ | async" [invoices]="invoices$ | async"
+    (viewInvoice)="openInvoiceDialog($event)">
+  </app-closed-tickets>
 </div>

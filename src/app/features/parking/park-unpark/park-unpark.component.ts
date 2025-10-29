@@ -54,12 +54,8 @@ export class ParkUnparkComponent {
       if (result?.paid) {
         const invoice = this.state.unparkVehicle(floorId, spotId, result.amount);
         this.notify.show(`🚗 Vehicle ${vehicleNumber ?? ''} unparked. Payment ₹${result.amount} received.`);
-
         if (invoice) {
-          this.dialog.open(InvoiceDialogComponent, {
-            width: '400px',
-            data: { invoice }
-          });
+          this.dialog.open(InvoiceDialogComponent, { width: '400px', data: { invoice } });
         }
       }
     });

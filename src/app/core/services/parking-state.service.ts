@@ -92,41 +92,55 @@ export class ParkingStateService {
     const floors = [...this.floors];
     const floor = floors.find(f => f.floorId === floorId);
     const spot = floor?.spots.find(s => s.spotId === spotId);
-    if (!spot) return;
+    if (!spot) return null;
 
     const tickets = [...this._tickets.value];
     const idx = tickets.findIndex(t => t.floorId === floorId && t.spotId === spotId);
-    if (idx === -1) return;
+    if (idx === -1) return null;
 
     const baseTicket = tickets[idx];
 
-    // Close ticket
     const closedTicket: ParkingTicket = {
       ...baseTicket,
       unparkedAt: new Date().toISOString(),
       fee: typeof fee === 'number' ? fee : this.calculateDefaultFee(baseTicket.allowedType, baseTicket.parkedAt),
     };
 
-    // Generate invoice (composition)
+    // Create invoice from closed ticket (composition)
     const invoice: Invoice = {
       id: this.generateInvoiceId(),
       ticket: closedTicket,
       totalAmount: closedTicket.fee ?? 0,
       generatedAt: new Date().toISOString(),
-      duration: this.calculateDuration(closedTicket.parkedAt, closedTicket.unparkedAt!),
-      status: 'PAID',
+      duration: this.calcDuration(closedTicket.parkedAt, closedTicket.unparkedAt),
+      status: 'PAID', // or derive from payment result when API integrated
     };
 
-    // Update state
-    spot.occupied = false;
+    // Move ticket to closed & free the spot
     const updatedTickets = tickets.filter(t => t.ticketId !== closedTicket.ticketId);
+    spot.occupied = false;
 
     this._tickets.next(updatedTickets);
     this._closedTickets.next([...this._closedTickets.value, closedTicket]);
     this._floors.next(floors);
-    this._invoices.next([...this._invoices.value, invoice]);
 
-    return invoice;
+    // Store invoice separately (no ticket.invoice linkage)
+    this._invoices.next([...(this._invoices.value ?? []), invoice]);
+
+    return invoice; // <-- important for UI to show invoice immediately
+  }
+
+  getInvoiceByTicketId(ticketId: string): Invoice | undefined {
+    return this._invoices.value.find(inv => inv.ticket.ticketId === ticketId);
+  }
+
+  // utility used above
+  private calcDuration(startIso?: string, endIso?: string): string {
+    if (!startIso || !endIso) return '-';
+    const start = new Date(startIso), end = new Date(endIso);
+    const mins = Math.floor((end.getTime() - start.getTime()) / 60000);
+    const h = Math.floor(mins / 60), m = mins % 60;
+    return h ? `${h}h ${m}m` : `${m}m`;
   }
 
   // -------- Helpers --------
